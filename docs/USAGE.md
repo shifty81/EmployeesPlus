@@ -358,6 +358,51 @@ See the `examples/` directory for complete working examples:
 - `example_basic.lua` - Basic usage
 - `example_drive_thru.lua` - Drive-thru workflow demonstration
 
+## Testing
+
+For testing the mod to ensure everything works:
+
+### Quick Test
+```bash
+# Run all tests (Linux/Mac)
+./run_tests.sh
+
+# Run all tests (Windows)
+run_tests.bat
+```
+
+### Manual Testing
+```bash
+# Test the mod functionality
+lua tests/test_mod.lua
+
+# Test basic features
+lua examples/example_basic.lua
+
+# Test drive-thru workflow
+lua examples/example_drive_thru.lua
+```
+
+### In-Game Testing
+Within the game console:
+```lua
+-- Load and initialize
+local EmployeesPlus = require("init")
+EmployeesPlus:init()
+
+-- Run a quick test
+local cashier = EmployeesPlus:hireEmployee("DriveThruCashier", "Test")
+cashier:startWork()
+cashier:assignWindow("TEST-1")
+
+-- Create and process order
+local order = EmployeesPlus:createOrder({{name = "Burger", price = 5.99}})
+-- ... process order ...
+EmployeesPlus:printStatus()
+```
+
+**For comprehensive testing instructions, see [TESTING.md](TESTING.md)**
+
 ## Troubleshooting
 
 **Problem**: Employee not working

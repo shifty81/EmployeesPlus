@@ -2,6 +2,32 @@
 
 A comprehensive Fast Food Simulator mod that adds three employee types and a complete order management system with to-go bags.
 
+## 🚀 Getting Started
+
+### Installation (3 Steps)
+1. **Download**: Get from [GitHub](https://github.com/shifty81/EmployeesPlus) (Code → Download ZIP)
+2. **Copy**: Place `EmployeesPlus` folder in your game's mods directory
+   - Windows: `C:\Program Files\FastFoodSimulator\Mods\`
+   - macOS: `~/Library/Application Support/FastFoodSimulator/Mods/`
+   - Linux: `~/.local/share/FastFoodSimulator/Mods/`
+3. **Launch**: Start the game and look for initialization message
+
+📖 **Detailed Guide**: [QUICKINSTALL.md](QUICKINSTALL.md) or [INSTALL.md](docs/INSTALL.md)
+
+### Testing (Verify It Works)
+```bash
+# Run all tests
+./run_tests.sh        # Linux/Mac
+run_tests.bat         # Windows
+
+# Or test manually
+lua tests/test_mod.lua
+```
+
+🧪 **Testing Guide**: [QUICKTEST.md](QUICKTEST.md) or [TESTING.md](docs/TESTING.md)
+
+---
+
 ## Features
 
 ### Employee Types
@@ -63,12 +89,34 @@ cashier:handOrderToCustomer(1)
 
 ## Installation
 
-See [INSTALL.md](docs/INSTALL.md) for detailed installation instructions.
+**Quick Install:**
+1. Download or clone this repository
+2. Copy the `EmployeesPlus` folder to your game's mods directory:
+   - **Windows**: `C:\Program Files\FastFoodSimulator\Mods\` or `%APPDATA%\FastFoodSimulator\Mods\`
+   - **macOS**: `~/Library/Application Support/FastFoodSimulator/Mods/`
+   - **Linux**: `~/.local/share/FastFoodSimulator/Mods/`
+3. Make sure `config.json` has `"enabled": true`
+4. Launch Fast Food Simulator
+5. Look for the mod initialization message in the game console
 
-1. Clone or download this repository
-2. Copy to your Fast Food Simulator mods folder
-3. Enable the mod in `config.json`
-4. Launch the game
+**See [INSTALL.md](docs/INSTALL.md) for detailed installation instructions, troubleshooting, and alternative installation methods.**
+
+## Testing
+
+See [TESTING.md](docs/TESTING.md) for comprehensive testing instructions.
+
+**Quick test:**
+```bash
+./run_tests.sh        # Linux/Mac
+run_tests.bat         # Windows
+```
+
+Or run individual tests:
+```bash
+lua tests/test_mod.lua              # Automated test suite
+lua examples/example_basic.lua      # Basic usage example
+lua examples/example_drive_thru.lua # Drive-thru workflow
+```
 
 ## Usage
 
