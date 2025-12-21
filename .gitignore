@@ -1,0 +1,31 @@
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Build artifacts
+build/
+dist/
+*.o
+*.so
+*.dll
+*.exe
+
+# Logs
+*.log
+logs/
+
+# Test files (if any)
+test_output/
+coverage/

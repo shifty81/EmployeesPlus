@@ -1,0 +1,31 @@
+{
+  "mod": {
+    "enabled": true,
+    "debug": false
+  },
+  "employees": {
+    "fry_cook": {
+      "enabled": true,
+      "default_cook_time": 120,
+      "max_simultaneous_items": 4
+    },
+    "cook": {
+      "enabled": true,
+      "max_simultaneous_orders": 3
+    },
+    "drive_thru_cashier": {
+      "enabled": true,
+      "auto_prepare_bags": true
+    }
+  },
+  "orders": {
+    "starting_order_number": 1000,
+    "show_receipts": true,
+    "print_order_updates": true
+  },
+  "to_go_bags": {
+    "show_order_number": true,
+    "attach_receipt": true,
+    "require_preparation": true
+  }
+}

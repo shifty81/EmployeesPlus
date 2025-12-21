@@ -1,2 +1,185 @@
 # EmployeesPlus
-Fry Cook / Cook / Drive Thru Cashier that hands customer item out of the window  the drive thru cook will specificallt setup a To go bag already in game to put the order in refrencing the order number and reciept that wil be put on bag 
+
+A comprehensive Fast Food Simulator mod that adds three employee types and a complete order management system with to-go bags.
+
+## Features
+
+### Employee Types
+
+#### 🍟 Fry Cook
+Specializes in frying food items like fries, chicken, onion rings, and more.
+- Manages fryer stations
+- Cooks multiple items simultaneously
+- Tracks cooking times and status
+
+#### 👨‍🍳 Cook
+General-purpose cook for preparing various food items.
+- Handles multiple cooking stations (grill, oven, prep table)
+- Manages complete orders
+- Tracks order preparation status
+
+#### 🚗 Drive Thru Cashier
+Handles the drive-thru window and customer interactions.
+- **Sets up to-go bags with order numbers and receipts**
+- Prepares orders for customer pickup
+- Hands orders to customers through the drive-thru window
+- Tracks orders handed out
+
+### Order System
+- Automatic order numbering (starting at #1000)
+- Itemized receipts with prices
+- Order status tracking (pending, preparing, ready, completed)
+- Real-time order updates
+
+### To-Go Bag System
+- **References order number on the bag**
+- **Attaches receipt to the bag**
+- Visual status indicators
+- Preparation tracking
+
+## Quick Start
+
+```lua
+-- Load the mod
+local EmployeesPlus = require("init")
+EmployeesPlus:init()
+
+-- Hire employees
+local cashier = EmployeesPlus:hireEmployee("DriveThruCashier", "Sarah")
+cashier:startWork()
+cashier:assignWindow("DRIVE-THRU-1")
+
+-- Create and process an order
+local order = EmployeesPlus:createOrder({
+    {name = "Burger", price = 5.99},
+    {name = "Fries", price = 2.99}
+})
+
+-- Setup to-go bag with order number and receipt
+local bag = cashier:setupToGoBag(order)
+cashier:prepareBagForPickup(bag)
+cashier:handOrderToCustomer(1)
+```
+
+## Installation
+
+See [INSTALL.md](docs/INSTALL.md) for detailed installation instructions.
+
+1. Clone or download this repository
+2. Copy to your Fast Food Simulator mods folder
+3. Enable the mod in `config.json`
+4. Launch the game
+
+## Usage
+
+See [USAGE.md](docs/USAGE.md) for complete API documentation and examples.
+
+### Basic Workflow
+
+1. **Hire Employees**
+   ```lua
+   local cook = EmployeesPlus:hireEmployee("Cook", "Mike")
+   local cashier = EmployeesPlus:hireEmployee("DriveThruCashier", "Sarah")
+   ```
+
+2. **Start Work & Assign Stations**
+   ```lua
+   cook:startWork()
+   cashier:startWork()
+   cook:assignCookingStation("GRILL-1", "grill")
+   cashier:assignWindow("DRIVE-THRU-1")
+   ```
+
+3. **Process Orders**
+   ```lua
+   local order = EmployeesPlus:createOrder({items})
+   cook:startPreparingOrder(order)
+   cook:cookItem(1, "Burger")
+   local readyOrder = cook:completeOrder(1)
+   ```
+
+4. **Handle at Drive-Thru**
+   ```lua
+   -- Cashier sets up to-go bag referencing order number and receipt
+   local bag = cashier:setupToGoBag(readyOrder)
+   cashier:prepareBagForPickup(bag)
+   cashier:handOrderToCustomer(1)
+   ```
+
+## Examples
+
+Check out the `examples/` directory:
+- `example_basic.lua` - Basic usage demonstration
+- `example_drive_thru.lua` - Complete drive-thru workflow
+
+## File Structure
+
+```
+EmployeesPlus/
+├── mod.json                    # Mod manifest
+├── config.json                 # Configuration settings
+├── README.md                   # This file
+├── src/
+│   ├── init.lua               # Main entry point
+│   ├── Order.lua              # Order management system
+│   ├── ToGoBag.lua            # To-go bag with receipt system
+│   └── employees/
+│       ├── Employee.lua       # Base employee class
+│       ├── FryCook.lua        # Fry cook implementation
+│       ├── Cook.lua           # Cook implementation
+│       └── DriveThruCashier.lua  # Drive-thru cashier
+├── examples/
+│   ├── example_basic.lua
+│   └── example_drive_thru.lua
+└── docs/
+    ├── INSTALL.md             # Installation guide
+    └── USAGE.md               # Usage documentation
+```
+
+## Configuration
+
+Customize employee behavior in `config.json`:
+
+```json
+{
+  "employees": {
+    "fry_cook": {
+      "enabled": true,
+      "default_cook_time": 120,
+      "max_simultaneous_items": 4
+    },
+    "cook": {
+      "enabled": true,
+      "max_simultaneous_orders": 3
+    },
+    "drive_thru_cashier": {
+      "enabled": true,
+      "auto_prepare_bags": true
+    }
+  }
+}
+```
+
+## Key Features Implemented
+
+✅ **Fry Cook** - Specialized frying employee  
+✅ **Cook** - General food preparation  
+✅ **Drive Thru Cashier** - Window service specialist  
+✅ **Order System** - Complete order management with unique numbers  
+✅ **To-Go Bags** - References order number and receipt on bag  
+✅ **Receipt System** - Itemized receipts with totals  
+✅ **Status Tracking** - Real-time order and employee status  
+
+## License
+
+MIT License - See repository for details
+
+## Support
+
+For issues, questions, or contributions:
+- GitHub Issues: https://github.com/shifty81/EmployeesPlus/issues
+- Documentation: See `docs/` folder
+
+## Version
+
+Current version: 1.0.0
