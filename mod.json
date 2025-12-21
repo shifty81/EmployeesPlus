@@ -1,0 +1,9 @@
+{
+  "name": "EmployeesPlus",
+  "version": "1.0.0",
+  "description": "Fast Food Simulator mod adding Fry Cook, Cook, and Drive Thru Cashier employees with to-go bag system",
+  "author": "shifty81",
+  "main": "src/init.lua",
+  "dependencies": {},
+  "gameVersion": "1.0.0+"
+}
