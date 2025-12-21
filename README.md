@@ -70,6 +70,23 @@ See [INSTALL.md](docs/INSTALL.md) for detailed installation instructions.
 3. Enable the mod in `config.json`
 4. Launch the game
 
+## Testing
+
+See [TESTING.md](docs/TESTING.md) for comprehensive testing instructions.
+
+**Quick test:**
+```bash
+./run_tests.sh        # Linux/Mac
+run_tests.bat         # Windows
+```
+
+Or run individual tests:
+```bash
+lua tests/test_mod.lua              # Automated test suite
+lua examples/example_basic.lua      # Basic usage example
+lua examples/example_drive_thru.lua # Drive-thru workflow
+```
+
 ## Usage
 
 See [USAGE.md](docs/USAGE.md) for complete API documentation and examples.
