@@ -2,6 +2,32 @@
 
 A comprehensive Fast Food Simulator mod that adds three employee types and a complete order management system with to-go bags.
 
+## 🚀 Getting Started
+
+### Installation (3 Steps)
+1. **Download**: Get from [GitHub](https://github.com/shifty81/EmployeesPlus) (Code → Download ZIP)
+2. **Copy**: Place `EmployeesPlus` folder in your game's mods directory
+   - Windows: `C:\Program Files\FastFoodSimulator\Mods\`
+   - macOS: `~/Library/Application Support/FastFoodSimulator/Mods/`
+   - Linux: `~/.local/share/FastFoodSimulator/Mods/`
+3. **Launch**: Start the game and look for initialization message
+
+📖 **Detailed Guide**: [QUICKINSTALL.md](QUICKINSTALL.md) or [INSTALL.md](docs/INSTALL.md)
+
+### Testing (Verify It Works)
+```bash
+# Run all tests
+./run_tests.sh        # Linux/Mac
+run_tests.bat         # Windows
+
+# Or test manually
+lua tests/test_mod.lua
+```
+
+🧪 **Testing Guide**: [QUICKTEST.md](QUICKTEST.md) or [TESTING.md](docs/TESTING.md)
+
+---
+
 ## Features
 
 ### Employee Types
