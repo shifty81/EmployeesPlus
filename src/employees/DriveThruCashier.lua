@@ -74,6 +74,7 @@ function DriveThruCashier:handOrderToCustomer(bagIndex)
     
     if bag:handToCustomer() then
         -- Record the handed order
+        -- Note: os.time() is used as a default. Replace with game-specific timing API if available
         table.insert(self.handedOrders, {
             orderNumber = bag:getDisplayedOrderNumber(),
             timestamp = os.time(),

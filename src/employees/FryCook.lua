@@ -30,6 +30,7 @@ function FryCook:startFrying(item, orderNumber)
     local cookingItem = {
         item = item,
         orderNumber = orderNumber,
+        -- Note: os.time() is used as a default. Replace with game-specific timing API if available
         startTime = os.time(),
         cookTime = item.cookTime or 120, -- default 2 minutes
         status = "frying"
@@ -49,6 +50,7 @@ function FryCook:checkCookingStatus(itemIndex)
     local cookingItem = self.cookingItems[itemIndex]
     if not cookingItem then return nil end
     
+    -- Note: For game integration, replace os.time() with game timing system
     local elapsedTime = os.time() - cookingItem.startTime
     if elapsedTime >= cookingItem.cookTime then
         cookingItem.status = "done"

@@ -13,6 +13,7 @@ function Order.new(items)
     self.orderNumber = orderCounter
     orderCounter = orderCounter + 1
     self.items = items or {}
+    -- Note: os.time() is used as a default. Replace with game-specific timing API if available
     self.timestamp = os.time()
     self.status = "pending" -- pending, preparing, ready, completed
     self.receipt = self:generateReceipt()

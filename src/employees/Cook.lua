@@ -34,6 +34,7 @@ function Cook:startPreparingOrder(order)
     local preparingOrder = {
         order = order,
         orderNumber = order:getOrderNumber(),
+        -- Note: os.time() is used as a default. Replace with game-specific timing API if available
         startTime = os.time(),
         itemsCompleted = {},
         status = "preparing"
