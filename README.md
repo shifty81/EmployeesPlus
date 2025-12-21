@@ -63,12 +63,17 @@ cashier:handOrderToCustomer(1)
 
 ## Installation
 
-See [INSTALL.md](docs/INSTALL.md) for detailed installation instructions.
+**Quick Install:**
+1. Download or clone this repository
+2. Copy the `EmployeesPlus` folder to your game's mods directory:
+   - **Windows**: `C:\Program Files\FastFoodSimulator\Mods\` or `%APPDATA%\FastFoodSimulator\Mods\`
+   - **macOS**: `~/Library/Application Support/FastFoodSimulator/Mods/`
+   - **Linux**: `~/.local/share/FastFoodSimulator/Mods/`
+3. Make sure `config.json` has `"enabled": true`
+4. Launch Fast Food Simulator
+5. Look for the mod initialization message in the game console
 
-1. Clone or download this repository
-2. Copy to your Fast Food Simulator mods folder
-3. Enable the mod in `config.json`
-4. Launch the game
+**See [INSTALL.md](docs/INSTALL.md) for detailed installation instructions, troubleshooting, and alternative installation methods.**
 
 ## Testing
 
