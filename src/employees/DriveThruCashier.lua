@@ -3,6 +3,7 @@
 
 local Employee = require("employees.Employee")
 local ToGoBag = require("ToGoBag")
+local Tray = require("Tray")
 
 local DriveThruCashier = setmetatable({}, {__index = Employee})
 DriveThruCashier.__index = DriveThruCashier
@@ -13,6 +14,8 @@ function DriveThruCashier.new(name)
     self.windowId = nil
     self.readyBags = {}
     self.handedOrders = {}
+    self.tray = Tray.new()
+    self.drinksInProgress = {} -- Track which drinks are being made
     return self
 end
 
@@ -127,6 +130,121 @@ end
 -- Get total orders handed out
 function DriveThruCashier:getTotalHandedOrders()
     return #self.handedOrders
+end
+
+-- Place a ticket on the tray for an order
+function DriveThruCashier:placeTicketOnTray(order)
+    if not self.isWorking then
+        print(string.format("Error: %s is not working", self.name))
+        return false
+    end
+    
+    local ticket = self.tray:placeTicket(order)
+    if ticket then
+        self.currentTask = string.format("Managing tickets on tray")
+        return ticket
+    end
+    return false
+end
+
+-- Check and make drinks for orders that have been waiting 20+ seconds
+function DriveThruCashier:checkAndMakeDrinks(currentTime)
+    if not self.isWorking then
+        return
+    end
+    
+    currentTime = currentTime or os.time()
+    local ticketsNeedingDrinks = self.tray:getTicketsNeedingDrinks(currentTime)
+    
+    for _, drinkInfo in ipairs(ticketsNeedingDrinks) do
+        -- Check if we're not already making this drink
+        local alreadyMaking = false
+        for _, inProgress in ipairs(self.drinksInProgress) do
+            if inProgress.orderNumber == drinkInfo.orderNumber and 
+               inProgress.drinkName == drinkInfo.drinkName then
+                alreadyMaking = true
+                break
+            end
+        end
+        
+        if not alreadyMaking then
+            self:makeDrink(drinkInfo.orderNumber, drinkInfo.drinkName)
+        end
+    end
+end
+
+-- Make a drink and place it on the tray
+function DriveThruCashier:makeDrink(orderNumber, drinkName)
+    if not self.isWorking then
+        print(string.format("Error: %s is not working", self.name))
+        return false
+    end
+    
+    -- Mark drink as in progress
+    table.insert(self.drinksInProgress, {
+        orderNumber = orderNumber,
+        drinkName = drinkName,
+        startTime = os.time()
+    })
+    
+    self.currentTask = string.format("Making %s for Order #%d", drinkName, orderNumber)
+    print(string.format("%s is making %s for Order #%d", self.name, drinkName, orderNumber))
+    
+    -- Simulate making the drink (in real game, this would take time)
+    -- After drink is made, place it on tray
+    self.tray:placeItem(orderNumber, drinkName)
+    
+    -- Remove from in-progress
+    for i, inProgress in ipairs(self.drinksInProgress) do
+        if inProgress.orderNumber == orderNumber and inProgress.drinkName == drinkName then
+            table.remove(self.drinksInProgress, i)
+            break
+        end
+    end
+    
+    -- Return to cashiering if no more drinks to make
+    if #self.drinksInProgress == 0 then
+        self.currentTask = nil
+        print(string.format("%s returned to cashiering", self.name))
+    end
+    
+    return true
+end
+
+-- Check if tray is complete for a specific order
+function DriveThruCashier:isTrayComplete(orderNumber)
+    return self.tray:checkTrayComplete(orderNumber)
+end
+
+-- Notify other employees that tray is complete (only when all items are on tray)
+function DriveThruCashier:notifyTrayComplete(orderNumber)
+    if not self.tray:checkTrayComplete(orderNumber) then
+        print(string.format("Tray for Order #%d is not complete yet", orderNumber))
+        return false
+    end
+    
+    print(string.format("%s: Tray for Order #%d is complete and ready!", self.name, orderNumber))
+    return true
+end
+
+-- Get the tray
+function DriveThruCashier:getTray()
+    return self.tray
+end
+
+-- Process idle tasks (check for drinks to make)
+function DriveThruCashier:performIdleTask()
+    if not self.isWorking then
+        return
+    end
+    
+    -- When idle, check if any drinks need to be made
+    self:checkAndMakeDrinks()
+    
+    -- If still idle after checking drinks, update task status
+    if not self.currentTask and self.tray:getIncompleteTicketCount() > 0 then
+        self.currentTask = "Monitoring tray for drink orders"
+    end
 end
 
 return DriveThruCashier

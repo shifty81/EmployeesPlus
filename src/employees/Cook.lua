@@ -128,4 +128,20 @@ function Cook:getActiveOrderCount()
     return #self.preparingOrders
 end
 
+-- Perform idle tasks when not actively cooking
+function Cook:performIdleTask()
+    if not self.isWorking then
+        return
+    end
+    
+    -- Clean and prep station
+    if #self.preparingOrders == 0 then
+        self.currentTask = "Cleaning and prepping cooking station"
+        print(string.format("%s is cleaning and prepping the station", self.name))
+    else
+        -- Check on orders in progress
+        self.currentTask = "Monitoring cooking orders"
+    end
+end
+
 return Cook

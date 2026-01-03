@@ -53,6 +53,31 @@ if exist "tests\test_mod.lua" (
 echo.
 echo.
 
+REM Run tray system tests
+echo ------------------------------------------
+echo Running: Tray System Test Suite
+echo ------------------------------------------
+set /a total_tests+=1
+
+if exist "tests\test_tray_system.lua" (
+    lua "tests\test_tray_system.lua"
+    if %ERRORLEVEL% EQU 0 (
+        echo.
+        echo [32m✓ Tray System Test Suite PASSED[0m
+        set /a passed_tests+=1
+    ) else (
+        echo.
+        echo [31mX Tray System Test Suite FAILED[0m
+        set /a failed_tests+=1
+    )
+) else (
+    echo X Test file not found: tests\test_tray_system.lua
+    set /a failed_tests+=1
+)
+
+echo.
+echo.
+
 REM Run basic example
 echo Running Examples...
 echo.
@@ -99,6 +124,31 @@ if exist "examples\example_drive_thru.lua" (
     )
 ) else (
     echo X Test file not found: examples\example_drive_thru.lua
+    set /a failed_tests+=1
+)
+
+echo.
+echo.
+
+REM Run tray system example
+echo ------------------------------------------
+echo Running: Tray System Example
+echo ------------------------------------------
+set /a total_tests+=1
+
+if exist "examples\example_tray_system.lua" (
+    lua "examples\example_tray_system.lua"
+    if %ERRORLEVEL% EQU 0 (
+        echo.
+        echo [32m✓ Tray System Example PASSED[0m
+        set /a passed_tests+=1
+    ) else (
+        echo.
+        echo [31mX Tray System Example FAILED[0m
+        set /a failed_tests+=1
+    )
+) else (
+    echo X Test file not found: examples\example_tray_system.lua
     set /a failed_tests+=1
 )
 

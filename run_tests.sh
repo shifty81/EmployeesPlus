@@ -68,6 +68,17 @@ fi
 echo ""
 echo ""
 
+# Run tray system tests
+total_tests=$((total_tests + 1))
+if run_test "tests/test_tray_system.lua" "Tray System Test Suite"; then
+    passed_tests=$((passed_tests + 1))
+else
+    failed_tests=$((failed_tests + 1))
+fi
+
+echo ""
+echo ""
+
 # Run basic example
 echo "Running Examples..."
 echo ""
@@ -84,6 +95,17 @@ echo ""
 # Run drive-thru example
 total_tests=$((total_tests + 1))
 if run_test "examples/example_drive_thru.lua" "Drive-Thru Example"; then
+    passed_tests=$((passed_tests + 1))
+else
+    failed_tests=$((failed_tests + 1))
+fi
+
+echo ""
+echo ""
+
+# Run tray system example
+total_tests=$((total_tests + 1))
+if run_test "examples/example_tray_system.lua" "Tray System Example"; then
     passed_tests=$((passed_tests + 1))
 else
     failed_tests=$((failed_tests + 1))

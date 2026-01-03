@@ -94,4 +94,20 @@ function FryCook:getActiveItemCount()
     return #self.cookingItems
 end
 
+-- Perform idle tasks when not actively frying
+function FryCook:performIdleTask()
+    if not self.isWorking then
+        return
+    end
+    
+    -- Clean fryer and prep baskets
+    if #self.cookingItems == 0 then
+        self.currentTask = "Cleaning fryer and prepping baskets"
+        print(string.format("%s is cleaning the fryer and prepping baskets", self.name))
+    else
+        -- Check on items being fried
+        self.currentTask = "Monitoring fryer"
+    end
+end
+
 return FryCook
