@@ -1,21 +1,40 @@
 # EmployeesPlus Installation Guide
 
+## ⚠️ Important: What This Mod Is
+
+**EmployeesPlus is a Lua code library, NOT a UI/graphical mod.** 
+
+### What This Means:
+- ✅ Provides employee management functionality through code
+- ✅ Used by writing Lua scripts or commands in the game console
+- ✅ Integrates with game's modding/scripting system
+- ❌ Does NOT add menus or UI elements automatically
+- ❌ Does NOT appear in in-game hiring menus by itself
+
+### How to Use It:
+You'll use this mod by writing Lua code in:
+1. **Game Console** (press `~` or `F1` key)
+2. **Custom Script Files** (create `.lua` files in your scripts folder)
+3. **Mod Integration** (if your game has a modding API)
+
+---
+
 ## Quick Installation (TL;DR)
 
 1. **Download**: Get the mod from [GitHub releases](https://github.com/shifty81/EmployeesPlus/releases) or clone the repo
 2. **Copy**: Place the `EmployeesPlus` folder in your game's mods directory
-3. **Enable**: Make sure `config.json` has `"enabled": true`
-4. **Play**: Launch the game and look for the initialization message
+3. **Use**: Load in game console with `local EmployeesPlus = require("init")`
+4. **Verify**: Run `EmployeesPlus:init()` and look for initialization message
 
 ---
 
 ## Overview
-EmployeesPlus is a Fast Food Simulator mod that adds three employee types and a comprehensive order/to-go bag system.
+EmployeesPlus is a Fast Food Simulator mod that adds three employee types, a comprehensive order/to-go bag system, and an intelligent tray system with automatic drink preparation.
 
 ## Requirements
 - Fast Food Simulator (version 1.0.0 or higher)
 - Lua runtime environment (usually included with the game)
-- Mod loader compatible with the game
+- Game with Lua scripting/modding support or console access
 
 ## Detailed Installation Steps
 
@@ -116,15 +135,20 @@ The mod comes pre-configured and ready to use. If you want to customize:
 }
 ```
 
-### Step 5: Launch the Game
+### Step 5: Launch the Game and Load the Mod
 
 1. **Start Fast Food Simulator**
-2. **Watch for mod loading** - The game should automatically detect and load the mod
-3. **Check the console** (usually accessible with `~` or `F1` key)
+2. **Open the game console** (usually `~` or `F1` key)
+3. **Load the mod** by typing:
+
+```lua
+local EmployeesPlus = require("init")
+EmployeesPlus:init()
+```
 
 ### Step 6: Verify Installation
 
-Look for this message in the game console:
+After running the commands above, you should see this message:
 
 ```
 ========================================
@@ -138,11 +162,64 @@ Loaded employees:
 ========================================
 ```
 
-If you see this message, the mod is installed correctly!
+**If you see this message, the mod is installed correctly! ✓**
 
-### Step 7: Test the Mod (Optional)
+### Step 7: Test the Mod
 
-To verify everything works, open the game console and run:
+To verify everything works, continue in the game console:
+
+```lua
+-- Hire an employee
+local cashier = EmployeesPlus:hireEmployee("DriveThruCashier", "Sarah")
+cashier:startWork()
+cashier:assignWindow("WINDOW-1")
+
+-- Check status
+EmployeesPlus:printStatus()
+```
+
+You should see employee status information displayed.
+
+### Step 8: Start Using the Mod
+
+Now you can:
+- Write custom scripts in `.lua` files
+- Use the mod's API from the game console
+- Integrate it with your game's modding system
+
+See [USAGE.md](USAGE.md) for complete API documentation and examples.
+
+---
+
+## How to Use After Installation
+
+### Option 1: Game Console (Quick Testing)
+1. Press `~` or `F1` to open console
+2. Type Lua commands:
+   ```lua
+   local EmployeesPlus = require("init")
+   EmployeesPlus:init()
+   local cashier = EmployeesPlus:hireEmployee("DriveThruCashier", "Sarah")
+   cashier:startWork()
+   ```
+
+### Option 2: Custom Script Files (Recommended)
+1. Create a file like `my_restaurant.lua` in your game's scripts folder
+2. Add your code:
+   ```lua
+   local EmployeesPlus = require("init")
+   EmployeesPlus:init()
+   -- ... your restaurant management code ...
+   ```
+3. Load it in game: `dofile("my_restaurant.lua")`
+
+### Option 3: Autoload (Advanced)
+If your game supports autoload scripts, add this to your autoload file:
+```lua
+local EmployeesPlus = require("init")
+EmployeesPlus:init()
+-- Mod will be available automatically
+```
 
 ```lua
 local EmployeesPlus = require("init")
@@ -268,16 +345,15 @@ Customize employee behavior in `config.json`:
 
 ### Problem: Mod Not Loading
 
-**Symptoms**: No initialization message appears in game console
+**Symptoms**: Error like `module 'init' not found` when trying to require the mod
 
 **Solutions**:
 1. ✓ Check that `mod.json` exists in the root of `EmployeesPlus` folder
-2. ✓ Verify `"enabled": true` in `config.json`
-3. ✓ Make sure the folder is named exactly `EmployeesPlus`
-4. ✓ Check game console for error messages (press `~` or `F1`)
-5. ✓ Verify you're looking in the correct mods directory
-6. ✓ Restart the game completely
-7. ✓ Check game's mod manager (if it has one) to enable the mod
+2. ✓ Make sure the folder is named exactly `EmployeesPlus` (case-sensitive)
+3. ✓ Verify all files are in the correct structure (see directory structure above)
+4. ✓ Make sure `src/init.lua` exists
+5. ✓ Check that the game's Lua path includes the mod directory
+6. ✓ Try specifying full path: `local EmployeesPlus = require("EmployeesPlus.src.init")`
 
 ### Problem: "Module not found" Error
 
@@ -288,17 +364,40 @@ Customize employee behavior in `config.json`:
 2. ✓ Make sure `src/init.lua` exists
 3. ✓ Check that all Lua files are in the `src/` directory
 4. ✓ Ensure the game's Lua path includes the mod directory
+5. ✓ In game console, check Lua path: `print(package.path)`
+
+### Problem: Mod Not Appearing in Game UI
+
+**Symptoms**: Can't find mod in in-game menus or hiring interface
+
+**Solution**: This is expected! The mod is a code library, not a UI addon.
+- ✓ This mod doesn't add UI elements automatically
+- ✓ Use it through Lua scripts or game console
+- ✓ Type `local EmployeesPlus = require("init")` in console
+- ✓ See [USAGE.md](USAGE.md) for how to use the mod
 
 ### Problem: Mod Loads but Functions Don't Work
 
-**Symptoms**: Initialization message appears, but employees/orders don't work
+**Symptoms**: Can require the mod, but employees/orders don't work correctly
 
 **Solutions**:
-1. ✓ Check that all employee types are enabled in `config.json`
-2. ✓ Run the test suite to verify functionality: `lua tests/test_mod.lua`
-3. ✓ Review the [USAGE.md](USAGE.md) guide for correct API usage
-4. ✓ Check game console for error messages
-5. ✓ Try the examples: `lua examples/example_basic.lua`
+1. ✓ Make sure you called `EmployeesPlus:init()` after requiring
+2. ✓ Check that all employee types are enabled in `config.json`
+3. ✓ Run the test suite to verify functionality: `lua tests/test_mod.lua`
+4. ✓ Review the [USAGE.md](USAGE.md) guide for correct API usage
+5. ✓ Check game console for error messages
+6. ✓ Try the examples: `lua examples/example_basic.lua`
+
+### Problem: Tray System Not Working
+
+**Symptoms**: Tray-related functions fail or drinks not being made
+
+**Solutions**:
+1. ✓ Ensure you're calling `cashier:checkAndMakeDrinks()` periodically
+2. ✓ Verify 20+ seconds have passed since ticket placement
+3. ✓ Check that drinks are in the order's item list
+4. ✓ Make sure items are being added to tray correctly
+5. ✓ Run tray tests: `lua tests/test_tray_system.lua`
 
 ### Problem: Permission Errors (Windows)
 
